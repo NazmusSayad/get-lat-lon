@@ -42,6 +42,7 @@
 
           navigator.geolocation.getCurrentPosition(handleSuccess, handleError, {
             enableHighAccuracy: true,
+            maximumAge: 1,
           })
         })
       }
