@@ -32,23 +32,18 @@
 
       const getCords = () => {
         return new Promise((res) => {
-          const handleSuccess = ({ coords: { latitude, longitude } }) => {
-            res([{ latitude, longitude }])
-          }
-
-          const handleError = (err) => {
-            res([, err.message])
-          }
+          const handleSuccess = ({ coords }) => res([coords])
+          const handleError = ({ message }) => res([, message])
 
           navigator.geolocation.getCurrentPosition(handleSuccess, handleError, {
             enableHighAccuracy: true,
-            maximumAge: 1,
+            maximumAge: 0,
           })
         })
       }
 
       copy.onclick = () => {
-        navigator.clipboard.writeText(show.textContent)
+        navigator.clipboard.writeText(show.querySelector("span").textContent)
       }
 
       btn.onclick = async () => {
@@ -60,7 +55,7 @@
         btn.removeAttribute('disabled')
 
         if (data) {
-          show.innerHTML = `${data.latitude}, ${data.longitude}`
+          show.innerHTML = `@${data.accuracy}: <span>${data.latitude}, ${data.longitude}</span>`
           copy.removeAttribute('style')
         } else if (err) {
           show.innerHTML = err
