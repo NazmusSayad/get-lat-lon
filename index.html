@@ -61,7 +61,9 @@
 
         if (data) {
           show.innerHTML = `${data.latitude}, ${data.longitude}`
-          copy.style.display = 'block'
+          copy.removeAttribute('style')
+        } else if (err) {
+          show.innerHTML = err
         }
       }
     </script>
