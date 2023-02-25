@@ -8,9 +8,10 @@
 
     <style>
       html {
-        font-size: 175%;
         color-scheme: dark;
         text-align: center;
+        user-select: none;
+        font-size: 175%;
       }
 
       button {
@@ -55,7 +56,7 @@
         btn.removeAttribute('disabled')
 
         if (data) {
-          show.innerHTML = `@${data.accuracy}<hr /><span>${data.latitude}, ${data.longitude}</span>`
+          show.innerHTML = `~${data.accuracy}<hr /><span>${data.latitude}, ${data.longitude}</span>`
           copy.removeAttribute('style')
         } else if (err) {
           show.innerHTML = err
