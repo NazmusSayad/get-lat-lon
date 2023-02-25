@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoo boi...</title>
+
+    <style>
+      html {
+        font-size: 175%;
+        color-scheme: dark;
+        text-align: center;
+      }
+
+      button {
+        font-size: inherit;
+        padding: 0.2em 0.4em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="btn">Click me</button>
+    <p id="show"></p>
+    <button id="copy" style="display: none">Copy</button>
+
+    <script>
+      const btn = document.getElementById('btn')
+      const copy = document.getElementById('copy')
+      const show = document.getElementById('show')
+
+      const getCords = () => {
+        return new Promise((res) => {
+          const handleSuccess = ({ coords: { latitude, longitude } }) => {
+            res([{ latitude, longitude }])
+          }
+
+          const handleError = (err) => {
+            res([, err.message])
+          }
+
+          navigator.geolocation.getCurrentPosition(handleSuccess, handleError, {
+            enableHighAccuracy: true,
+          })
+        })
+      }
+
+      copy.onclick = () => {
+        navigator.clipboard.writeText(show.textContent)
+      }
+
+      btn.onclick = async () => {
+        show.innerHTML = 'Getting your data...'
+        copy.style.display = 'none'
+        btn.setAttribute('disabled', '')
+
+        const [data, err] = await getCords()
+        btn.removeAttribute('disabled')
+
+        if (data) {
+          show.innerHTML = `${data.latitude}, ${data.longitude}`
+          copy.style.display = 'block'
+        }
+      }
+    </script>
+  </body>
+</html>
