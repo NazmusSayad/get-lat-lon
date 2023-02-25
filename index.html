@@ -55,7 +55,7 @@
         btn.removeAttribute('disabled')
 
         if (data) {
-          show.innerHTML = `@${data.accuracy}: <span>${data.latitude}, ${data.longitude}</span>`
+          show.innerHTML = `@${data.accuracy}<hr /><span>${data.latitude}, ${data.longitude}</span>`
           copy.removeAttribute('style')
         } else if (err) {
           show.innerHTML = err
